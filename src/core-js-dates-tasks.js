@@ -176,8 +176,17 @@ function formatDate(date) {
  * 12, 2023 => 10
  * 1, 2024 => 8
  */
-function getCountWeekendsInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+function getCountWeekendsInMonth(month, year) {
+  let count = 0;
+  const startDay = new Date(year, month - 1, 1);
+
+  while (startDay.getMonth() === month - 1) {
+    if (startDay.getDay() === 0) count += 1;
+    else if (startDay.getDay() === 6) count += 1;
+    startDay.setDate(startDay.getDate() + 1);
+  }
+
+  return count;
 }
 
 /**
@@ -191,8 +200,16 @@ function getCountWeekendsInMonth(/* month, year */) {
  * Date(2024, 0, 31) => 5
  * Date(2024, 1, 23) => 8
  */
-function getWeekNumberByDate(/* date */) {
-  throw new Error('Not implemented');
+function getWeekNumberByDate(date) {
+  const currentDay = new Date(date);
+  let count = 1;
+
+  while (date.getFullYear() === currentDay.getFullYear()) {
+    if (date.getDay() === 0) count += 1;
+    date.setDate(date.getDate() - 1);
+  }
+  if (date.getDay() === 6) count -= 1;
+  return count;
 }
 
 /**
